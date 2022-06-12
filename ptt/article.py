@@ -66,6 +66,7 @@ class PttArticle:
         body (str): the content of the article
         ip (str): IP of this post
         country (str): Country of this post
+        link (str): Url of this post
     '''
 
     REGEX = re.compile(u'※ 發信站: 批踢踢實業坊|※ 文章網址:', re.UNICODE)
@@ -75,8 +76,9 @@ class PttArticle:
         re.UNICODE
     )
 
-    def __init__(self, tag: Tag) -> None:
+    def __init__(self, tag: Tag, link:str=None) -> None:
         self._tag = tag
+        self._link = link
 
     @property
     def tag(self) -> Tag:
@@ -122,6 +124,10 @@ class PttArticle:
         if m is None:
             raise ValueError('Not match')
         return m.group('country')
+    
+    @property
+    def link(self) -> str:
+        return self._link
 
     @property
     def article_meta(self) -> List[Tag]:

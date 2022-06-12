@@ -178,7 +178,7 @@ class PostReader:
         response = rq.get(link)
         response.encoding = 'utf-8'
         tag = BeautifulSoup(response.text, 'html.parser')
-        return PttArticle(tag)
+        return PttArticle(tag, link=link)
 
     def _get_request_method(self):
         session = PttSession()
