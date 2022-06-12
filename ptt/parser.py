@@ -170,6 +170,15 @@ class PostReader:
         response.encoding = 'utf-8'
         tag = BeautifulSoup(response.text, 'html.parser')
         return PttArticle(tag)
+    
+    def read_link(self, link: str) -> Optional[PttArticle]:
+        if not re.compile('^(http:\/\/|https:\/\/)?www\.ptt\.cc\/bbs(\/.*)?$').match(link):
+            return None
+        rq = self._get_request_method()
+        response = rq.get(link)
+        response.encoding = 'utf-8'
+        tag = BeautifulSoup(response.text, 'html.parser')
+        return PttArticle(tag)
 
     def _get_request_method(self):
         session = PttSession()
